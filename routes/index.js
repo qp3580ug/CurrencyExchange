@@ -9,20 +9,24 @@ router.get('/', function(req, res, next) {
 
 router.get('/convert', function(req, res, next){
 
-  var dollars = req.query.dollars;
+  var starting_currency = req.query.starting_currency;
   var toCurrency = req.query.to_currency;
+  var fromCurrency = req.query.from_currency;
 
-  var converted = dollars * exchangeRates[toCurrency];
+  var converted = starting_currency * exchangeRates[toCurrency] / exchangeRates[fromCurrency];
 
   res.render('results', {
-    dollars: dollars,
+    starting_currency: starting_currency,
     toCurrency: toCurrency,
-    converted: converted}
+    converted: converted,
+    fromCurrency: fromCurrency}
   );
 });
 
 router.get('/about', function(req, res, next){
-  res.render('about', { name: "A simple currency converter site"});
+  res.render('about', {
+    description: "This is a simple currency converter site",
+    name: "Nathan"});
 });
 
 module.exports = router;
